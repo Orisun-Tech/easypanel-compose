@@ -487,6 +487,10 @@ services:
   db:
     image: supabase/postgres:15.8.1.085
     restart: unless-stopped
+    # ORISUN: o Easypanel so liga a rede easypanel o servico com dominio (kong); as APIs da ORISUN precisam do db
+    networks:
+      - default
+      - easypanel
     volumes:
       - ./volumes/db/realtime.sql:/docker-entrypoint-initdb.d/migrations/99-realtime.sql:Z
       # Must be superuser to create event trigger
@@ -608,3 +612,7 @@ services:
 volumes:
   db-config:
   deno-cache:
+
+networks:
+  easypanel:
+    external: true
